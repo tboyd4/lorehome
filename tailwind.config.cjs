@@ -3,12 +3,12 @@ module.exports = {
 	content: ['./src/**/*.svelte'],
 	theme: {
 		fontFamily: {
-			sans: ['Saira Condensed', 'sans-serif']
+			sans: ['League Spartan', 'sans-serif']
 		},
 		extend: {},
 		colors: {
-			primary: '#A53F3F',
-			secondary: '#008AFE',
+			primary: '#C81D77',
+			secondary: '#6710C2',
 			white: '#FFFFFF',
 			granite: '#212121',
 			slate: '#484848',

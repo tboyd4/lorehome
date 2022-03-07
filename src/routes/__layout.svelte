@@ -4,6 +4,7 @@
 	import { variables } from '$lib/variables';
 	import { fireUserStore } from '$lib/stores/user.store';
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 
 	const firebaseConfig = {
 		apiKey: variables.firebaseAPIKey,
@@ -58,30 +59,47 @@
 	});
 </script>
 
-<div id="Header" class="w-full h-fit p-2 flex flex-row">
+<div id="Header" class="w-full h-fit py-4 px-2 flex flex-row">
 	<button
-		class="mr-12"
+		class="font-light ml-auto mr-4 p-3 rounded text-white border-white transition-all ease-in-out duration-200 hover:bg-white hover:bg-opacity-25 active:bg-opacity-40"
 		on:click={() => {
-			initSignIn();
-		}}>Log In</button
+			goto('/');
+		}}>Home</button
 	>
-	<button
-		on:click={() => {
-			initSignOut();
-		}}>Log Out</button
-	>
+	{#if !$fireUserStore.user}
+		<button
+			class="font-light mx-4 p-3 rounded border text-white border-white transition-all ease-in-out duration-200 hover:bg-white hover:bg-opacity-25 active:bg-opacity-40"
+			on:click={() => {
+				initSignIn();
+			}}>Log In</button
+		>
+	{:else}
+		<button
+			class="font-light mx-4 p-3 rounded text-white border-white transition-all ease-in-out duration-200 hover:bg-white hover:bg-opacity-25 active:bg-opacity-40"
+			on:click={() => {
+				goto('/my-campaign');
+			}}>My Campaign</button
+		>
+		<button
+			class="font-light mx-4 p-3 rounded text-white border-white transition-all ease-in-out duration-200 hover:bg-white hover:bg-opacity-25 active:bg-opacity-40"
+			on:click={() => {
+				goto('/dm-admin');
+			}}>DM Admin Dash</button
+		>
+		<button
+			class="font-light mx-4 p-3 rounded border text-white border-white transition-all ease-in-out duration-200 hover:bg-white hover:bg-opacity-25 active:bg-opacity-40"
+			on:click={() => {
+				initSignOut();
+			}}>Log Out</button
+		>
+	{/if}
 </div>
 
 <div id="PageContent">
 	<div id="BodyContent">
-		{#if $fireUserStore.user}
-			<h1>{$fireUserStore.user.displayName}</h1>
-		{/if}
 		<slot />
 	</div>
-	<div id="Footer">
-		<p>Hey</p>
-	</div>
+	<div id="Footer" />
 </div>
 
 <style>
@@ -94,5 +112,23 @@
 		min-height: 100vh;
 		flex-direction: column;
 		justify-content: space-between;
+	}
+
+	:global(body) {
+		background: hsla(328, 75%, 45%, 1);
+
+		background: linear-gradient(45deg, hsla(328, 75%, 45%, 1) 0%, hsla(269, 85%, 41%, 1) 100%);
+
+		background: -moz-linear-gradient(45deg, hsla(328, 75%, 45%, 1) 0%, hsla(269, 85%, 41%, 1) 100%);
+
+		background: -webkit-linear-gradient(
+			45deg,
+			hsla(328, 75%, 45%, 1) 0%,
+			hsla(269, 85%, 41%, 1) 100%
+		);
+	}
+
+	:global(h1, h2, h3, h4, h5, p, a, button) {
+		font-family: 'League Spartan', sans-serif;
 	}
 </style>
